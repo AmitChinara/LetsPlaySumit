@@ -4,7 +4,7 @@ const wrongSound = new Audio("https://www.soundjay.com/buttons/sounds/button-10.
 
 const quizData = [
   {
-    image: "https://cdn-icons-png.flaticon.com/512/415/415733.png", // apples
+    image: "https://www.gettyimages.in/photos/animated-apples", // apples
     options: ["Apple", "Apples", "Applees", "Appls"],
     answer: "Apples"
   },
