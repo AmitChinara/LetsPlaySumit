@@ -1,55 +1,54 @@
-// script.js
 const correctSound = new Audio("https://www.soundjay.com/buttons/sounds/button-3.mp3");
 const wrongSound = new Audio("https://www.soundjay.com/buttons/sounds/button-10.mp3");
 
 const quizData = [
   {
-    image: "https://www.gettyimages.in/photos/animated-apples", // apples
+    image: "images/apples.jpg",
     options: ["Apple", "Apples", "Applees", "Appls"],
     answer: "Apples"
   },
   {
-    image: "https://cdn-icons-png.flaticon.com/512/1048/1048315.png", // boxes
+    image: "images/box.jpg",
     options: ["Box", "Boxs", "Boxes", "Boxess"],
     answer: "Boxes"
   },
   {
-    image: "https://cdn-icons-png.flaticon.com/512/616/616430.png", // cats
+    image: "images/cats.jpg",
     options: ["Cat", "Cats", "Cates", "Catss"],
     answer: "Cats"
   },
   {
-    image: "https://cdn-icons-png.flaticon.com/512/616/616408.png", // dogs
+    image: "images/dogs.jpg",
     options: ["Dog", "Dogs", "Doges", "Dogss"],
     answer: "Dogs"
   },
   {
-    image: "https://cdn-icons-png.flaticon.com/512/3448/3448339.png", // buses
+    image: "images/bus.jpg",
     options: ["Bus", "Buss", "Buses", "Busies"],
     answer: "Buses"
   },
   {
-    image: "https://cdn-icons-png.flaticon.com/512/1995/1995574.png", // children
+    image: "images/children.jpg",
     options: ["Child", "Childs", "Children", "Childes"],
     answer: "Children"
   },
   {
-    image: "https://cdn-icons-png.flaticon.com/512/4140/4140048.png", // men
+    image: "images/man.jpg",
     options: ["Man", "Mans", "Men", "Mens"],
     answer: "Men"
   },
   {
-    image: "https://cdn-icons-png.flaticon.com/512/4140/4140051.png", // women
+    image: "images/women.jpg",
     options: ["Woman", "Womans", "Women", "Womens"],
     answer: "Women"
   },
   {
-    image: "https://cdn-icons-png.flaticon.com/512/1046/1046784.png", // teeth
+    image: "images/teeth.jpg",
     options: ["Tooth", "Tooths", "Teeth", "Toothes"],
     answer: "Teeth"
   },
   {
-    image: "https://cdn-icons-png.flaticon.com/512/2907/2907253.png", // feet
+    image: "images/feet.jpg",
     options: ["Foot", "Foots", "Feet", "Feets"],
     answer: "Feet"
   }
@@ -62,42 +61,72 @@ const questionImage = document.getElementById("questionImage");
 const optionsDiv = document.getElementById("options");
 const scoreSpan = document.getElementById("score");
 const progressBar = document.getElementById("progress");
+const feedback = document.getElementById("answerFeedback");
+const board = document.getElementById("answerBoard");
 
 function loadQuestion() {
   const q = quizData[currentQuestion];
   questionImage.src = q.image;
   optionsDiv.innerHTML = "";
-
-  progressBar.style.width = ((currentQuestion) / quizData.length) * 100 + "%";
+  progressBar.style.width = (currentQuestion / quizData.length) * 100 + "%";
 
   q.options.forEach(option => {
     const btn = document.createElement("button");
     btn.innerText = option;
 
-    btn.onclick = () => {
-      if (option === q.answer) {
-        score += 10;
-        correctSound.play();
-      } else {
-        score -= 5;
-        wrongSound.play();
-      }
-
-      scoreSpan.innerText = score;
-      currentQuestion++;
-
-      if (currentQuestion < quizData.length) {
-        loadQuestion();
-      } else {
-        progressBar.style.width = "100%";
-        setTimeout(() => {
-          alert("Quiz Finished! Final Score: " + score);
-        }, 300);
-      }
-    };
+    btn.onclick = () => handleAnswer(option, q, btn);
 
     optionsDiv.appendChild(btn);
   });
+}
+
+function handleAnswer(selected, q, btn) {
+  const buttons = optionsDiv.querySelectorAll("button");
+  buttons.forEach(b => b.disabled = true);
+
+  let isCorrect = selected === q.answer;
+
+  if (isCorrect) {
+    btn.classList.add("correct");
+    feedback.innerText = "✅ Correct!";
+    feedback.style.color = "green";
+    score += 10;
+    correctSound.play();
+  } else {
+    btn.classList.add("wrong");
+
+    buttons.forEach(b => {
+      if (b.innerText === q.answer) {
+        b.classList.add("correct");
+      }
+    });
+
+    feedback.innerText = "❌ Correct: " + q.answer;
+    feedback.style.color = "red";
+    score -= 5;
+    wrongSound.play();
+  }
+
+  scoreSpan.innerText = score;
+
+  // Add to board
+  const li = document.createElement("li");
+  li.classList.add(isCorrect ? "correct" : "wrong");
+  li.innerText = `Q${currentQuestion + 1}: ${selected} → ${q.answer}`;
+  board.appendChild(li);
+
+  setTimeout(() => {
+    feedback.innerText = "";
+    currentQuestion++;
+
+    if (currentQuestion < quizData.length) {
+      loadQuestion();
+    } else {
+      progressBar.style.width = "100%";
+      feedback.innerText = "🎉 Finished! Score: " + score;
+      feedback.style.color = "blue";
+    }
+  }, 1000);
 }
 
 loadQuestion();
