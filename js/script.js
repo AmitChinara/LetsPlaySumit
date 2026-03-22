@@ -10,7 +10,7 @@ const quizData = [
   {
     image: "images/box.jpg",
     options: ["Box", "Boxs", "Boxes", "Boxess"],
-    answer: "Boxes"
+    answer: "Box"
   },
   {
     image: "images/cats.jpg",
@@ -25,7 +25,7 @@ const quizData = [
   {
     image: "images/bus.jpg",
     options: ["Bus", "Buss", "Buses", "Busies"],
-    answer: "Buses"
+    answer: "Bus"
   },
   {
     image: "images/children.jpg",
@@ -35,7 +35,7 @@ const quizData = [
   {
     image: "images/man.jpg",
     options: ["Man", "Mans", "Men", "Mens"],
-    answer: "Men"
+    answer: "Man"
   },
   {
     image: "images/women.jpg",
