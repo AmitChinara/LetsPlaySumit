@@ -4,54 +4,54 @@ const wrongSound = new Audio("https://www.soundjay.com/buttons/sounds/button-10.
 
 const quizData = [
   {
-    image: "images/sun.png",
-    options: ["Sun", "Moon", "Earth", "Mars"],
-    answer: "Sun"
+    image: "https://cdn-icons-png.flaticon.com/512/415/415733.png", // apples
+    options: ["Apple", "Apples", "Applees", "Appls"],
+    answer: "Apples"
   },
   {
-    image: "images/moon.png",
-    options: ["Sun", "Moon", "Star", "Planet"],
-    answer: "Moon"
+    image: "https://cdn-icons-png.flaticon.com/512/1048/1048315.png", // boxes
+    options: ["Box", "Boxs", "Boxes", "Boxess"],
+    answer: "Boxes"
   },
   {
-    image: "images/earth.png",
-    options: ["Mars", "Earth", "Jupiter", "Saturn"],
-    answer: "Earth"
+    image: "https://cdn-icons-png.flaticon.com/512/616/616430.png", // cats
+    options: ["Cat", "Cats", "Cates", "Catss"],
+    answer: "Cats"
   },
   {
-    image: "images/lion.png",
-    options: ["Tiger", "Lion", "Leopard", "Cheetah"],
-    answer: "Lion"
+    image: "https://cdn-icons-png.flaticon.com/512/616/616408.png", // dogs
+    options: ["Dog", "Dogs", "Doges", "Dogss"],
+    answer: "Dogs"
   },
   {
-    image: "images/tiger.png",
-    options: ["Lion", "Tiger", "Cat", "Dog"],
-    answer: "Tiger"
+    image: "https://cdn-icons-png.flaticon.com/512/3448/3448339.png", // buses
+    options: ["Bus", "Buss", "Buses", "Busies"],
+    answer: "Buses"
   },
   {
-    image: "images/elephant.png",
-    options: ["Rhino", "Elephant", "Hippo", "Buffalo"],
-    answer: "Elephant"
+    image: "https://cdn-icons-png.flaticon.com/512/1995/1995574.png", // children
+    options: ["Child", "Childs", "Children", "Childes"],
+    answer: "Children"
   },
   {
-    image: "images/apple.png",
-    options: ["Mango", "Banana", "Apple", "Orange"],
-    answer: "Apple"
+    image: "https://cdn-icons-png.flaticon.com/512/4140/4140048.png", // men
+    options: ["Man", "Mans", "Men", "Mens"],
+    answer: "Men"
   },
   {
-    image: "images/banana.png",
-    options: ["Apple", "Banana", "Grapes", "Papaya"],
-    answer: "Banana"
+    image: "https://cdn-icons-png.flaticon.com/512/4140/4140051.png", // women
+    options: ["Woman", "Womans", "Women", "Womens"],
+    answer: "Women"
   },
   {
-    image: "images/car.png",
-    options: ["Bike", "Bus", "Car", "Truck"],
-    answer: "Car"
+    image: "https://cdn-icons-png.flaticon.com/512/1046/1046784.png", // teeth
+    options: ["Tooth", "Tooths", "Teeth", "Toothes"],
+    answer: "Teeth"
   },
   {
-    image: "images/airplane.png",
-    options: ["Helicopter", "Airplane", "Rocket", "Drone"],
-    answer: "Airplane"
+    image: "https://cdn-icons-png.flaticon.com/512/2907/2907253.png", // feet
+    options: ["Foot", "Foots", "Feet", "Feets"],
+    answer: "Feet"
   }
 ];
 
