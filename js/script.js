@@ -3,12 +3,12 @@ const wrongSound = new Audio("https://www.soundjay.com/buttons/sounds/button-10.
 
 const quizData = [
   { image: "images/apples.jpg", answer: "Apples" },
-  { image: "images/box.jpg", answer: "Boxes" },
+  { image: "images/box.jpg", answer: "Box" },
   { image: "images/cats.jpg", answer: "Cats" },
   { image: "images/dogs.jpg", answer: "Dogs" },
-  { image: "images/bus.jpg", answer: "Buses" },
+  { image: "images/bus.jpg", answer: "Bus" },
   { image: "images/children.jpg", answer: "Children" },
-  { image: "images/man.jpg", answer: "Men" },
+  { image: "images/man.jpg", answer: "Man" },
   { image: "images/women.jpg", answer: "Women" },
   { image: "images/teeth.jpg", answer: "Teeth" },
   { image: "images/feet.jpg", answer: "Feet" }
