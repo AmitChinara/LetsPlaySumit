@@ -2,63 +2,24 @@ const correctSound = new Audio("https://www.soundjay.com/buttons/sounds/button-3
 const wrongSound = new Audio("https://www.soundjay.com/buttons/sounds/button-10.mp3");
 
 const quizData = [
-  {
-    image: "images/apples.jpg",
-    options: ["Apple", "Apples", "Applees", "Appls"],
-    answer: "Apples"
-  },
-  {
-    image: "images/box.jpg",
-    options: ["Box", "Boxs", "Boxes", "Boxess"],
-    answer: "Box"
-  },
-  {
-    image: "images/cats.jpg",
-    options: ["Cat", "Cats", "Cates", "Catss"],
-    answer: "Cats"
-  },
-  {
-    image: "images/dogs.jpg",
-    options: ["Dog", "Dogs", "Doges", "Dogss"],
-    answer: "Dogs"
-  },
-  {
-    image: "images/bus.jpg",
-    options: ["Bus", "Buss", "Buses", "Busies"],
-    answer: "Bus"
-  },
-  {
-    image: "images/children.jpg",
-    options: ["Child", "Childs", "Children", "Childes"],
-    answer: "Children"
-  },
-  {
-    image: "images/man.jpg",
-    options: ["Man", "Mans", "Men", "Mens"],
-    answer: "Man"
-  },
-  {
-    image: "images/women.jpg",
-    options: ["Woman", "Womans", "Women", "Womens"],
-    answer: "Women"
-  },
-  {
-    image: "images/teeth.jpg",
-    options: ["Tooth", "Tooths", "Teeth", "Toothes"],
-    answer: "Teeth"
-  },
-  {
-    image: "images/feet.jpg",
-    options: ["Foot", "Foots", "Feet", "Feets"],
-    answer: "Feet"
-  }
+  { image: "images/apples.jpg", answer: "Apples" },
+  { image: "images/box.jpg", answer: "Boxes" },
+  { image: "images/cats.jpg", answer: "Cats" },
+  { image: "images/dogs.jpg", answer: "Dogs" },
+  { image: "images/bus.jpg", answer: "Buses" },
+  { image: "images/children.jpg", answer: "Children" },
+  { image: "images/man.jpg", answer: "Men" },
+  { image: "images/women.jpg", answer: "Women" },
+  { image: "images/teeth.jpg", answer: "Teeth" },
+  { image: "images/feet.jpg", answer: "Feet" }
 ];
 
 let currentQuestion = 0;
 let score = 0;
 
 const questionImage = document.getElementById("questionImage");
-const optionsDiv = document.getElementById("options");
+const userInput = document.getElementById("userInput");
+const submitBtn = document.getElementById("submitBtn");
 const scoreSpan = document.getElementById("score");
 const progressBar = document.getElementById("progress");
 const feedback = document.getElementById("answerFeedback");
@@ -67,41 +28,29 @@ const board = document.getElementById("answerBoard");
 function loadQuestion() {
   const q = quizData[currentQuestion];
   questionImage.src = q.image;
-  optionsDiv.innerHTML = "";
-  progressBar.style.width = (currentQuestion / quizData.length) * 100 + "%";
 
-  q.options.forEach(option => {
-    const btn = document.createElement("button");
-    btn.innerText = option;
+  progressBar.style.width =
+    (currentQuestion / quizData.length) * 100 + "%";
 
-    btn.onclick = () => handleAnswer(option, q, btn);
-
-    optionsDiv.appendChild(btn);
-  });
+  userInput.value = "";
+  feedback.innerText = "";
 }
 
-function handleAnswer(selected, q, btn) {
-  const buttons = optionsDiv.querySelectorAll("button");
-  buttons.forEach(b => b.disabled = true);
+submitBtn.onclick = () => {
+  const q = quizData[currentQuestion];
 
-  let isCorrect = selected === q.answer;
+  const userAnswer = userInput.value.trim().toLowerCase();
+  const correctAnswer = q.answer.toLowerCase();
+
+  let isCorrect = userAnswer === correctAnswer;
 
   if (isCorrect) {
-    btn.classList.add("correct");
     feedback.innerText = "✅ Correct!";
     feedback.style.color = "green";
     score += 10;
     correctSound.play();
   } else {
-    btn.classList.add("wrong");
-
-    buttons.forEach(b => {
-      if (b.innerText === q.answer) {
-        b.classList.add("correct");
-      }
-    });
-
-    feedback.innerText = "❌ Correct: " + q.answer;
+    feedback.innerText = "❌ Correct answer: " + q.answer;
     feedback.style.color = "red";
     score -= 5;
     wrongSound.play();
@@ -112,21 +61,27 @@ function handleAnswer(selected, q, btn) {
   // Add to board
   const li = document.createElement("li");
   li.classList.add(isCorrect ? "correct" : "wrong");
-  li.innerText = `Q${currentQuestion + 1}: ${selected} → ${q.answer}`;
+  li.innerText = `Q${currentQuestion + 1}: ${userInput.value || "(blank)"} → ${q.answer}`;
   board.appendChild(li);
 
   setTimeout(() => {
-    feedback.innerText = "";
     currentQuestion++;
 
     if (currentQuestion < quizData.length) {
       loadQuestion();
     } else {
       progressBar.style.width = "100%";
-      feedback.innerText = "🎉 Finished! Score: " + score;
+      feedback.innerText = "🎉 Quiz Finished! Score: " + score;
       feedback.style.color = "blue";
     }
   }, 1000);
-}
+};
+
+// Allow Enter key
+userInput.addEventListener("keypress", function(e) {
+  if (e.key === "Enter") {
+    submitBtn.click();
+  }
+});
 
 loadQuestion();
