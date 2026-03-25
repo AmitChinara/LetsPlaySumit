@@ -1,41 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Image Quiz</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Riddle Drag & Drop</title>
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
 
-<div class="main-container">
+    <div class="container">
+      <h2>Riddle Game</h2>
+      <div id="riddleBox"></div>
 
-  <!-- Quiz -->
-  <div class="quiz-container">
-    <h2>Let's Play Sumit</h2>
+      <div class="drop-zone" id="dropZone">Drop Answer Here</div>
 
-    <div class="progress-bar">
-      <div class="progress" id="progress"></div>
+      <div class="options" id="options"></div>
+
+      <p>Score: <span id="score">0</span></p>
+
+      <h3>Answers</h3>
+      <table border="1" width="100%" id="resultTable">
+        <tr>
+          <th>Question</th>
+          <th>Your Answer</th>
+          <th>Correct Answer</th>
+        </tr>
+      </table>
     </div>
 
-    <img id="questionImage" src="" alt="Question Image">
-
-    <!-- Input instead of options -->
-    <input type="text" id="userInput" placeholder="Type your answer..." />
-    <button id="submitBtn">Submit</button>
-
-    <div id="answerFeedback" class="feedback"></div>
-
-    <div class="score">Score: <span id="score">0</span></div>
-  </div>
-
-  <!-- Answer Board -->
-  <div class="board">
-    <h3>Answer Board</h3>
-    <ul id="answerBoard"></ul>
-  </div>
-
-</div>
-
-<script src="js/script.js"></script>
-</body>
+    <script src="js/script.js"></script>
+  </body>
 </html>

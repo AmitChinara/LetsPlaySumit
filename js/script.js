@@ -1,87 +1,142 @@
-const correctSound = new Audio("https://www.soundjay.com/buttons/sounds/button-3.mp3");
-const wrongSound = new Audio("https://www.soundjay.com/buttons/sounds/button-10.mp3");
-
-const quizData = [
-  { image: "images/apples.jpg", answer: "Apples" },
-  { image: "images/box.jpg", answer: "Box" },
-  { image: "images/cats.jpg", answer: "Cats" },
-  { image: "images/dogs.jpg", answer: "Dogs" },
-  { image: "images/bus.jpg", answer: "Bus" },
-  { image: "images/children.jpg", answer: "Children" },
-  { image: "images/man.jpg", answer: "Man" },
-  { image: "images/women.jpg", answer: "Women" },
-  { image: "images/teeth.jpg", answer: "Teeth" },
-  { image: "images/feet.jpg", answer: "Feet" }
+const riddles = [
+  {
+    q: "I speak without a mouth and hear without ears. What am I?",
+    options: ["Echo", "Wind", "Shadow", "Voice"],
+    answer: "Echo"
+  },
+  {
+    q: "I have keys but no locks. What am I?",
+    options: ["Keyboard", "Piano", "Map", "Code"],
+    answer: "Keyboard"
+  },
+  {
+    q: "I have a face and two hands but no arms. What am I?",
+    options: ["Clock", "Watch", "Mirror", "Robot"],
+    answer: "Clock"
+  },
+  {
+    q: "What has to be broken before you can use it?",
+    options: ["Egg", "Glass", "Seal", "Code"],
+    answer: "Egg"
+  },
+  {
+    q: "I’m tall when young, and short when old. What am I?",
+    options: ["Candle", "Tree", "Building", "Stick"],
+    answer: "Candle"
+  },
+  {
+    q: "What has one eye but cannot see?",
+    options: ["Needle", "Storm", "Camera", "Button"],
+    answer: "Needle"
+  },
+  {
+    q: "What gets wetter the more it dries?",
+    options: ["Towel", "Sponge", "Cloth", "Rain"],
+    answer: "Towel"
+  },
+  {
+    q: "What has legs but doesn’t walk?",
+    options: ["Table", "Chair", "Bed", "Desk"],
+    answer: "Table"
+  },
+  {
+    q: "What runs but never walks?",
+    options: ["Water", "Clock", "Car", "Wind"],
+    answer: "Water"
+  },
+  {
+    q: "What has a neck but no head?",
+    options: ["Bottle", "Shirt", "Guitar", "Jar"],
+    answer: "Bottle"
+  }
 ];
 
-let currentQuestion = 0;
+let current = 0;
 let score = 0;
+let isAnswered = false;
 
-const questionImage = document.getElementById("questionImage");
-const userInput = document.getElementById("userInput");
-const submitBtn = document.getElementById("submitBtn");
+const riddleBox = document.getElementById("riddleBox");
+const optionsDiv = document.getElementById("options");
+const dropZone = document.getElementById("dropZone");
 const scoreSpan = document.getElementById("score");
-const progressBar = document.getElementById("progress");
-const feedback = document.getElementById("answerFeedback");
-const board = document.getElementById("answerBoard");
+const table = document.getElementById("resultTable");
 
-function loadQuestion() {
-  const q = quizData[currentQuestion];
-  questionImage.src = q.image;
+function loadRiddle() {
+  const r = riddles[current];
 
-  progressBar.style.width =
-    (currentQuestion / quizData.length) * 100 + "%";
+  isAnswered = false;
 
-  userInput.value = "";
-  feedback.innerText = "";
+  riddleBox.innerText = r.q;
+  optionsDiv.innerHTML = "";
+
+  dropZone.innerText = "Drop Answer Here";
+  dropZone.classList.remove("correct", "wrong");
+
+  // use fixed options (NO RANDOM)
+  r.options.forEach(opt => {
+    const div = document.createElement("div");
+    div.className = "option";
+    div.innerText = opt;
+    div.draggable = true;
+
+    div.addEventListener("dragstart", e => {
+      e.dataTransfer.setData("text", opt);
+    });
+
+    optionsDiv.appendChild(div);
+  });
 }
 
-submitBtn.onclick = () => {
-  const q = quizData[currentQuestion];
+// allow drop
+dropZone.addEventListener("dragover", e => e.preventDefault());
 
-  const userAnswer = userInput.value.trim().toLowerCase();
-  const correctAnswer = q.answer.toLowerCase();
+// drop logic
+dropZone.addEventListener("drop", e => {
+  if (isAnswered) return;
 
-  let isCorrect = userAnswer === correctAnswer;
+  isAnswered = true;
 
-  if (isCorrect) {
-    feedback.innerText = "✅ Correct!";
-    feedback.style.color = "green";
+  const selected = e.dataTransfer.getData("text");
+  const correct = riddles[current].answer;
+
+  dropZone.innerText = selected;
+
+  if (selected === correct) {
     score += 10;
-    correctSound.play();
+    dropZone.classList.add("correct");
   } else {
-    feedback.innerText = "❌ Correct answer: " + q.answer;
-    feedback.style.color = "red";
     score -= 5;
-    wrongSound.play();
+    dropZone.classList.add("wrong");
+
+    setTimeout(() => {
+      dropZone.innerText = correct;
+    }, 2000);
   }
+
+  // add to table
+  const row = table.insertRow();
+  row.insertCell(0).innerText = riddles[current].q;
+  row.insertCell(1).innerText = selected;
+  row.insertCell(2).innerText = correct;
 
   scoreSpan.innerText = score;
 
-  // Add to board
-  const li = document.createElement("li");
-  li.classList.add(isCorrect ? "correct" : "wrong");
-  li.innerText = `Q${currentQuestion + 1}: ${userInput.value || "(blank)"} → ${q.answer}`;
-  board.appendChild(li);
+  // disable dragging
+  document.querySelectorAll(".option").forEach(opt => {
+    opt.draggable = false;
+  });
 
+  // next question
   setTimeout(() => {
-    currentQuestion++;
+    current++;
 
-    if (currentQuestion < quizData.length) {
-      loadQuestion();
+    if (current < riddles.length) {
+      loadRiddle();
     } else {
-      progressBar.style.width = "100%";
-      feedback.innerText = "🎉 Quiz Finished! Score: " + score;
-      feedback.style.color = "blue";
+      alert("Game Over! Final Score: " + score);
     }
-  }, 1000);
-};
-
-// Allow Enter key
-userInput.addEventListener("keypress", function(e) {
-  if (e.key === "Enter") {
-    submitBtn.click();
-  }
+  }, 2000);
 });
 
-loadQuestion();
+// start
+loadRiddle();
