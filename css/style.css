@@ -1,66 +1,86 @@
-/* style.css */
 body {
-  font-family: Arial;
-  background: #667eea;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  margin: 0;
+    font-family: Arial;
+    background: #f5f5f5;
+    margin: 0;
 }
 
-.container {
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  width: 420px;
-  text-align: center;
+h2 {
+    text-align: center;
+    margin-top: 20px;
 }
 
-#riddleBox {
-  margin-bottom: 20px;
-  font-weight: bold;
+/* layout */
+.main-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
 }
 
-.drop-zone {
-  border: 2px dashed #333;
-  padding: 20px;
-  margin-bottom: 20px;
-
-  min-height: 80px;          /* ⬅️ increased height */
-  
-  display: flex;             /* ⬅️ NEW */
-  justify-content: center;   /* ⬅️ center horizontally */
-  align-items: center;       /* ⬅️ center vertically */
-  
-  font-size: 50px;           /* ⬅️ bigger text */
-  font-weight: bold;         /* ⬅️ bold text */
-  text-align: center;
-
-  transition: 0.3s;
+/* panels */
+.left-panel {
+    width: 40%;
 }
 
+.right-panel {
+    width: 60%;
+}
+
+/* boxes */
+.box {
+    background: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+/* drop area */
+.drop-box {
+    border: 2px dashed #999;
+    padding: 15px;
+    margin: 10px 0;
+    min-height: 40px;
+    transition: 0.3s;
+}
+
+/* options */
+.option {
+    padding: 10px;
+    margin: 10px;
+    background: #3498db;
+    color: white;
+    border-radius: 5px;
+    cursor: grab;
+    display: inline-block;
+    transition: 0.3s;
+}
+
+.option:hover {
+    opacity: 0.8;
+}
+
+/* feedback */
 .correct {
-  background: #c8f7c5;
-  border-color: green;
+    background: #2ecc71 !important;
+    color: white;
 }
 
 .wrong {
-  background: #f7c5c5;
-  border-color: red;
+    background: #e74c3c !important;
+    color: white;
 }
 
-.options {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
+/* button */
+button {
+    padding: 10px 20px;
+    border: none;
+    background: #2ecc71;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: auto;
+    margin-top: 15px;
 }
 
-.option {
-  padding: 10px;
-  background: #6c63ff;
-  color: white;
-  border-radius: 5px;
-  cursor: grab;
+button:hover {
+    background: #27ae60;
 }

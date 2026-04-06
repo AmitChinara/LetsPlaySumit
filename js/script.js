@@ -1,142 +1,159 @@
-const riddles = [
-  {
-    q: "I speak without a mouth and hear without ears. What am I?",
-    options: ["Echo", "Wind", "Shadow", "Voice"],
-    answer: "Echo"
-  },
-  {
-    q: "I have keys but no locks. What am I?",
-    options: ["Keyboard", "Piano", "Map", "Code"],
-    answer: "Keyboard"
-  },
-  {
-    q: "I have a face and two hands but no arms. What am I?",
-    options: ["Clock", "Watch", "Mirror", "Robot"],
-    answer: "Clock"
-  },
-  {
-    q: "What has to be broken before you can use it?",
-    options: ["Egg", "Glass", "Seal", "Code"],
-    answer: "Egg"
-  },
-  {
-    q: "I’m tall when young, and short when old. What am I?",
-    options: ["Candle", "Tree", "Building", "Stick"],
-    answer: "Candle"
-  },
-  {
-    q: "What has one eye but cannot see?",
-    options: ["Needle", "Storm", "Camera", "Button"],
-    answer: "Needle"
-  },
-  {
-    q: "What gets wetter the more it dries?",
-    options: ["Towel", "Sponge", "Cloth", "Rain"],
-    answer: "Towel"
-  },
-  {
-    q: "What has legs but doesn’t walk?",
-    options: ["Table", "Chair", "Bed", "Desk"],
-    answer: "Table"
-  },
-  {
-    q: "What runs but never walks?",
-    options: ["Water", "Clock", "Car", "Wind"],
-    answer: "Water"
-  },
-  {
-    q: "What has a neck but no head?",
-    options: ["Bottle", "Shirt", "Guitar", "Jar"],
-    answer: "Bottle"
-  }
-];
+const app = document.getElementById("app");
 
-let current = 0;
-let score = 0;
-let isAnswered = false;
+let questionIndex = 0;
+let phase = "info";
+let stepIndex = 0;
+let draggedItem = null;
 
-const riddleBox = document.getElementById("riddleBox");
-const optionsDiv = document.getElementById("options");
-const dropZone = document.getElementById("dropZone");
-const scoreSpan = document.getElementById("score");
-const table = document.getElementById("resultTable");
+let finalInfo = [];
+let finalSolution = [];
 
-function loadRiddle() {
-  const r = riddles[current];
+// render UI
+function render() {
+    const currentQ = gameData[questionIndex];
+    const steps = phase === "info" ? currentQ.infoSteps : currentQ.solutionSteps;
+    const step = steps[stepIndex];
 
-  isAnswered = false;
+    let html = `
+        <div class="box">
+            <p>${currentQ.question}</p>
+        </div>
 
-  riddleBox.innerText = r.q;
-  optionsDiv.innerHTML = "";
+        <div class="main-container">
 
-  dropZone.innerText = "Drop Answer Here";
-  dropZone.classList.remove("correct", "wrong");
+            <!-- LEFT PANEL -->
+            <div class="left-panel">
+                <div class="box">
+                    <h3>Your Answer 👇</h3>
 
-  // use fixed options (NO RANDOM)
-  r.options.forEach(opt => {
-    const div = document.createElement("div");
-    div.className = "option";
-    div.innerText = opt;
-    div.draggable = true;
+                    <b>Given:</b>
+                    ${finalInfo.length ? finalInfo.map(i => `<p>${i}</p>`).join("") : "<p>---</p>"}
 
-    div.addEventListener("dragstart", e => {
-      e.dataTransfer.setData("text", opt);
-    });
+                    <b>Solution:</b>
+                    ${finalSolution.length ? finalSolution.map(s => `<p>${s}</p>`).join("") : "<p>---</p>"}
+                </div>
+            </div>
 
-    optionsDiv.appendChild(div);
-  });
+            <!-- RIGHT PANEL -->
+            <div class="right-panel">
+
+                <div class="box">
+                    <h3>${phase === "info" ? "Fill Given Information" : "Build Solution"}</h3>
+
+                    <div class="drop-box" data-answer="${step.answer}">
+                        ${step.blank}
+                    </div>
+                </div>
+
+                <div class="box">
+                    ${step.options.map(o => `
+                        <div class="option" draggable="true" data-type="${o.type}">
+                            ${o.text}
+                        </div>
+                    `).join("")}
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+    app.innerHTML = html;
 }
 
-// allow drop
-dropZone.addEventListener("dragover", e => e.preventDefault());
+render();
 
-// drop logic
-dropZone.addEventListener("drop", e => {
-  if (isAnswered) return;
-
-  isAnswered = true;
-
-  const selected = e.dataTransfer.getData("text");
-  const correct = riddles[current].answer;
-
-  dropZone.innerText = selected;
-
-  if (selected === correct) {
-    score += 10;
-    dropZone.classList.add("correct");
-  } else {
-    score -= 5;
-    dropZone.classList.add("wrong");
-
-    setTimeout(() => {
-      dropZone.innerText = correct;
-    }, 2000);
-  }
-
-  // add to table
-  const row = table.insertRow();
-  row.insertCell(0).innerText = riddles[current].q;
-  row.insertCell(1).innerText = selected;
-  row.insertCell(2).innerText = correct;
-
-  scoreSpan.innerText = score;
-
-  // disable dragging
-  document.querySelectorAll(".option").forEach(opt => {
-    opt.draggable = false;
-  });
-
-  // next question
-  setTimeout(() => {
-    current++;
-
-    if (current < riddles.length) {
-      loadRiddle();
-    } else {
-      alert("Game Over! Final Score: " + score);
+// drag start
+document.addEventListener("dragstart", (e) => {
+    if (e.target.classList.contains("option")) {
+        draggedItem = e.target;
     }
-  }, 2000);
 });
 
-// start
-loadRiddle();
+// allow drop
+document.addEventListener("dragover", (e) => {
+    if (e.target.classList.contains("drop-box")) {
+        e.preventDefault();
+    }
+});
+
+// drop logic
+document.addEventListener("drop", (e) => {
+    if (e.target.classList.contains("drop-box")) {
+
+        if (draggedItem.dataset.type === e.target.dataset.answer) {
+
+            // show in drop area
+            e.target.innerHTML = draggedItem.innerHTML;
+            e.target.classList.add("correct");
+
+            // store answer
+            if (phase === "info") {
+                finalInfo.push(draggedItem.innerHTML);
+            } else {
+                finalSolution.push(draggedItem.innerHTML);
+            }
+
+            // wait 2 sec then move next
+            setTimeout(() => {
+                stepIndex++;
+
+                const currentQ = gameData[questionIndex];
+                const steps = phase === "info" ? currentQ.infoSteps : currentQ.solutionSteps;
+
+                if (stepIndex < steps.length) {
+                    render();
+                } else {
+                    if (phase === "info") {
+                        phase = "solution";
+                        stepIndex = 0;
+                        render();
+                    } else {
+                        showFinal();
+                    }
+                }
+
+            }, 2000);
+
+        } else {
+            e.target.classList.add("wrong");
+
+            setTimeout(() => {
+                e.target.classList.remove("wrong");
+            }, 1000);
+        }
+    }
+});
+
+// final screen
+function showFinal() {
+    let html = `
+        <div class="box">
+            <h2>✅ Final Solution</h2>
+
+            <h3>Given:</h3>
+            ${finalInfo.map(i => `<p>${i}</p>`).join("")}
+
+            <h3>Solution:</h3>
+            ${finalSolution.map(s => `<p>${s}</p>`).join("")}
+        </div>
+    `;
+
+    if (questionIndex < gameData.length - 1) {
+        html += `<button onclick="nextQuestion()">Next Question ➡️</button>`;
+    } else {
+        html += `<h3>🎉 All Questions Completed!</h3>`;
+    }
+
+    app.innerHTML = html;
+}
+
+// next question
+function nextQuestion() {
+    questionIndex++;
+    phase = "info";
+    stepIndex = 0;
+    finalInfo = [];
+    finalSolution = [];
+    render();
+}
