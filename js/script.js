@@ -1,159 +1,173 @@
-const app = document.getElementById("app");
+const questionBox = document.getElementById("questionBox");
+const answerBox = document.getElementById("answerBox");
+const optionsBox = document.getElementById("optionsBox");
+const dropZone = document.getElementById("dropZone");
+const hintBox = document.getElementById("hintBox");
+const nextBtn = document.getElementById("nextBtn");
 
-let questionIndex = 0;
-let phase = "info";
+let dragged = null;
+
+let qIndex = 0;
 let stepIndex = 0;
-let draggedItem = null;
+let phase = "info";
 
-let finalInfo = [];
-let finalSolution = [];
+let completedSteps = [];
+let isCompleted = false;
 
-// render UI
-function render() {
-    const currentQ = gameData[questionIndex];
-    const steps = phase === "info" ? currentQ.infoSteps : currentQ.solutionSteps;
-    const step = steps[stepIndex];
+/* -----------------------------
+   SOLVER
+------------------------------ */
+const solve = (qIndex) => {
+    const answers = {
+        0: 6, 1: 7, 2: 8, 3: 5, 4: 7,
+        5: 7, 6: 7, 7: 5, 8: 6, 9: 7
+    };
+    return answers[qIndex] ?? "?";
+};
 
-    let html = `
-        <div class="box">
-            <p>${currentQ.question}</p>
-        </div>
+/* -----------------------------
+   RENDER UI (CLEAN)
+------------------------------ */
+const renderUI = () => {
 
-        <div class="main-container">
+    const q = gameData[qIndex];
+    if (!q) return;
 
-            <!-- LEFT PANEL -->
-            <div class="left-panel">
-                <div class="box">
-                    <h3>Your Answer 👇</h3>
+    const steps = phase === "info" ? q.infoSteps : q.solutionSteps;
+    const step = steps?.[stepIndex];
 
-                    <b>Given:</b>
-                    ${finalInfo.length ? finalInfo.map(i => `<p>${i}</p>`).join("") : "<p>---</p>"}
+    questionBox.innerHTML = q.question;
 
-                    <b>Solution:</b>
-                    ${finalSolution.length ? finalSolution.map(s => `<p>${s}</p>`).join("") : "<p>---</p>"}
-                </div>
+    answerBox.innerHTML = "";
+
+    // ✅ render only learning steps (NO solution duplication)
+    completedSteps.forEach(s => {
+        answerBox.innerHTML += `<div class="answer-item">${s}</div>`;
+    });
+
+    // 🔥 FINAL STATE: show only solution once
+    if (isCompleted) {
+
+        hintBox.innerText = "🎉 Completed! Click Next Question";
+
+        answerBox.innerHTML += `
+            <div class="answer-item active-step">
+                x = ${solve(qIndex)}
             </div>
+        `;
 
-            <!-- RIGHT PANEL -->
-            <div class="right-panel">
+        return;
+    }
 
-                <div class="box">
-                    <h3>${phase === "info" ? "Fill Given Information" : "Build Solution"}</h3>
+    // STEP VIEW
+    if (step) {
 
-                    <div class="drop-box" data-answer="${step.answer}">
-                        ${step.blank}
-                    </div>
-                </div>
+        hintBox.innerText = step.blank;
 
-                <div class="box">
-                    ${step.options.map(o => `
-                        <div class="option" draggable="true" data-type="${o.type}">
-                            ${o.text}
-                        </div>
-                    `).join("")}
-                </div>
-
+        answerBox.innerHTML += `
+            <div class="answer-item active-step">
+                ${step.blank}
             </div>
+        `;
 
-        </div>
-    `;
+        optionsBox.innerHTML = step.options.map(opt => `
+            <div class="option" draggable="true" data-type="${opt.type}">
+                ${opt.text}
+            </div>
+        `).join("");
+    }
+};
 
-    app.innerHTML = html;
-}
-
-render();
-
-// drag start
+/* -----------------------------
+   DRAG LOGIC
+------------------------------ */
 document.addEventListener("dragstart", (e) => {
     if (e.target.classList.contains("option")) {
-        draggedItem = e.target;
+        dragged = e.target;
     }
 });
 
-// allow drop
-document.addEventListener("dragover", (e) => {
-    if (e.target.classList.contains("drop-box")) {
-        e.preventDefault();
+dropZone.addEventListener("dragover", (e) => e.preventDefault());
+
+dropZone.addEventListener("drop", () => {
+
+    const q = gameData[qIndex];
+    const steps = phase === "info" ? q.infoSteps : q.solutionSteps;
+    const step = steps[stepIndex];
+
+    if (!step) return;
+
+    const selected = dragged.dataset.type;
+
+    if (selected !== step.answer) {
+        dropZone.classList.add("wrong");
+        setTimeout(() => dropZone.classList.remove("wrong"), 500);
+        return;
     }
+
+    dropZone.classList.add("correct");
+
+    // ✅ IMPORTANT: NEVER STORE SOLUTION
+    if (step.answer !== "sol") {
+        completedSteps.push(dragged.innerText);
+    }
+
+    setTimeout(() => {
+        dropZone.classList.remove("correct");
+        nextStep();
+    }, 400);
 });
 
-// drop logic
-document.addEventListener("drop", (e) => {
-    if (e.target.classList.contains("drop-box")) {
+/* -----------------------------
+   STEP CONTROL
+------------------------------ */
+const nextStep = () => {
 
-        if (draggedItem.dataset.type === e.target.dataset.answer) {
+    const q = gameData[qIndex];
+    const steps = phase === "info" ? q.infoSteps : q.solutionSteps;
 
-            // show in drop area
-            e.target.innerHTML = draggedItem.innerHTML;
-            e.target.classList.add("correct");
+    stepIndex++;
 
-            // store answer
-            if (phase === "info") {
-                finalInfo.push(draggedItem.innerHTML);
-            } else {
-                finalSolution.push(draggedItem.innerHTML);
-            }
+    if (stepIndex >= steps.length) {
 
-            // wait 2 sec then move next
-            setTimeout(() => {
-                stepIndex++;
+        if (phase === "info") {
 
-                const currentQ = gameData[questionIndex];
-                const steps = phase === "info" ? currentQ.infoSteps : currentQ.solutionSteps;
-
-                if (stepIndex < steps.length) {
-                    render();
-                } else {
-                    if (phase === "info") {
-                        phase = "solution";
-                        stepIndex = 0;
-                        render();
-                    } else {
-                        showFinal();
-                    }
-                }
-
-            }, 2000);
+            phase = "solution";
+            stepIndex = 0;
 
         } else {
-            e.target.classList.add("wrong");
 
-            setTimeout(() => {
-                e.target.classList.remove("wrong");
-            }, 1000);
+            isCompleted = true;
+
+            nextBtn.disabled = false;
+            nextBtn.classList.add("enabled");
+
+            renderUI();
+            return;
         }
     }
-});
 
-// final screen
-function showFinal() {
-    let html = `
-        <div class="box">
-            <h2>✅ Final Solution</h2>
+    renderUI();
+};
 
-            <h3>Given:</h3>
-            ${finalInfo.map(i => `<p>${i}</p>`).join("")}
+/* -----------------------------
+   NEXT QUESTION
+------------------------------ */
+nextBtn.addEventListener("click", () => {
 
-            <h3>Solution:</h3>
-            ${finalSolution.map(s => `<p>${s}</p>`).join("")}
-        </div>
-    `;
-
-    if (questionIndex < gameData.length - 1) {
-        html += `<button onclick="nextQuestion()">Next Question ➡️</button>`;
-    } else {
-        html += `<h3>🎉 All Questions Completed!</h3>`;
-    }
-
-    app.innerHTML = html;
-}
-
-// next question
-function nextQuestion() {
-    questionIndex++;
+    qIndex++;
     phase = "info";
     stepIndex = 0;
-    finalInfo = [];
-    finalSolution = [];
-    render();
-}
+    completedSteps = [];
+    isCompleted = false;
+
+    nextBtn.disabled = true;
+    nextBtn.classList.remove("enabled");
+
+    renderUI();
+});
+
+/* -----------------------------
+   INIT
+------------------------------ */
+renderUI();
