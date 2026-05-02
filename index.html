@@ -9,46 +9,41 @@
 
 <body>
 
-    <div class="app">
+<div class="app">
 
-        <!-- QUESTION -->
-        <div id="questionBox" class="question-box"></div>
+    <div id="questionBox" class="question-box"></div>
 
-        <!-- MAIN -->
-        <div class="main">
+    <div class="main">
 
-            <!-- LEFT -->
-            <div class="panel left">
-                <h3>🧠 Your Solution</h3>
-                <div id="answerBox"></div>
+        <div class="panel left">
+            <h3>🧠 Your Solution</h3>
+            <div id="answerBox"></div>
+        </div>
+
+        <div class="panel right">
+
+            <div class="hint-box">
+                <h3>💡 Step</h3>
+                <p id="hintBox"></p>
             </div>
 
-            <!-- RIGHT -->
-            <div class="panel right">
-
-                <div class="hint-box">
-                    <h3>💡 Hint</h3>
-                    <p id="hintBox"></p>
-                </div>
-
-                <div id="dropZone" class="drop-zone">DROP HERE</div>
-
-                <h3>🎯 Options</h3>
-                <div id="optionsBox"></div>
-
-                <button id="nextBtn" class="next-btn" disabled>
-                    Next Question →
-                </button>
-
+            <div class="input-box">
+                <input id="inputField" type="text" placeholder="Type your answer..." />
+                <button id="submitBtn">Submit</button>
             </div>
+
+            <button id="nextBtn" class="next-btn" disabled>
+                Next Question →
+            </button>
 
         </div>
 
     </div>
 
-    <script src="js/data.js"></script>
-    <script src="js/script.js"></script>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/script.js"></script>
 
 </body>
-
 </html>
