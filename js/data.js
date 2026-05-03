@@ -2,141 +2,151 @@ const gameData = [
 
 {
     question: `
-        Har student ko 4 pens milte hain.
-        Agar total 28 pens hain, toh kitne students hain?
+        Har student ko 5 pencils milti hain.
+        Agar 6 students hain, toh total pencils kitni hain?
     `,
     steps: [
-        { blank: "Number of students = ___", display: "Number of students = x", answers: ["x"] },
-        { blank: "No. of pens per student = ___", display: "No. of pens per student = 4", answers: ["4"] },
-        { blank: "Total no. of pens = ___", display: "Total no. of pens = 28", answers: ["28"] },
-        { blank: "Equation = ___", display: "Equation: x × 4 = 28", answers: ["x*4=28","4*x=28","28/4=x"] },
-        { blank: "Solution x = ___", display: "x = 7", answers: ["7"] }
+        { blank: "No. of Students = ___", display: "No. of Students = 6", answers: ["6"] },
+        { blank: "No. of Pencils per student = ___", display: "No. of Pencils per student = 5", answers: ["5"] },
+        { blank: "Total no. of pencils = ___", display: "Total no. of pencils = x", answers: ["x"] },
+        { blank: "Equation = ___", display: "Equation: 6 × 5 = x", answers: ["6*5=x","5*6=x"] },
+        { blank: "Solution x = ___", display: "x = 30", answers: ["30"] }
     ]
 },
 
 {
     question: `
-        5 boxes mein chocolates hain.
-        Total 40 chocolates hain. Har box mein kitni chocolates hain?
+        4 boxes mein apples hain.
+        Har box mein 7 apples hain.
+        Total apples kitne hain?
     `,
     steps: [
-        { blank: "No. of Boxes = ___", display: "No. of Boxes = 5", answers: ["5"] },
-        { blank: "No. of chocolates per box = ___", display: "No. of chocolates per box = x", answers: ["x"] },
-        { blank: "Total no. of chocolates = ___", display: "Total no. of chocolates = 40", answers: ["40"] },
-        { blank: "Equation = ___", display: "Equation: 5 × x = 40", answers: ["5*x=40","x*5=40","40/5=x"] },
-        { blank: "Solution x = ___", display: "x = 8", answers: ["8"] }
+        { blank: "No. of Boxes = ___", display: "No. of Boxes = 4", answers: ["4"] },
+        { blank: "No. of Apples per box = ___", display: "No. of Apples per box = 7", answers: ["7"] },
+        { blank: "Total no. of apples = ___", display: "Total no. of apples = x", answers: ["x"] },
+        { blank: "Equation = ___", display: "Equation: 4 × 7 = x", answers: ["4*7=x","7*4=x"] },
+        { blank: "Solution x = ___", display: "x = 28", answers: ["28"] }
     ]
 },
 
 {
     question: `
-        Har packet mein 6 biscuits hain.
-        Total 54 biscuits hain. Kitne packets hain?
+        Har packet mein 8 biscuits hain.
+        Total 64 biscuits hain.
+        Kitne packets hain?
     `,
     steps: [
         { blank: "No. of Packets = ___", display: "No. of Packets = x", answers: ["x"] },
-        { blank: "No. of biscuits per packet = ___", display: "No. of biscuits per packet = 6", answers: ["6"] },
-        { blank: "Total no. of biscuits = ___", display: "Total no. of biscuits = 54", answers: ["54"] },
-        { blank: "Equation = ___", display: "Equation: x × 6 = 54", answers: ["x*6=54","6*x=54","54/6=x"] },
-        { blank: "Solution x = ___", display: "x = 9", answers: ["9"] }
-    ]
-},
-
-{
-    question: `
-        8 bags mein oranges hain.
-        Total 64 oranges hain. Har bag mein kitne oranges hain?
-    `,
-    steps: [
-        { blank: "No. of Bags = ___", display: "No. of Bags = 8", answers: ["8"] },
-        { blank: "No. of oranges per bag = ___", display: "No. of oranges per bag = x", answers: ["x"] },
-        { blank: "Total no. of oranges = ___", display: "Total no. of oranges = 64", answers: ["64"] },
-        { blank: "Equation = ___", display: "Equation: 8 × x = 64", answers: ["8*x=64","x*8=64","64/8=x"] },
+        { blank: "No. of Biscuits per packet = ___", display: "No. of Biscuits per packet = 8", answers: ["8"] },
+        { blank: "Total no. of biscuits = ___", display: "Total no. of biscuits = 64", answers: ["64"] },
+        { blank: "Equation = ___", display: "Equation: x × 8 = 64", answers: ["x*8=64","64/8=x"] },
         { blank: "Solution x = ___", display: "x = 8", answers: ["8"] }
     ]
 },
 
 {
     question: `
-        Har tray mein 5 eggs hain.
-        Total 35 eggs hain. Kitni trays hain?
+        9 trays mein eggs hain.
+        Har tray mein 6 eggs hain.
+        Total eggs kitne hain?
     `,
     steps: [
-        { blank: "No. of Trays = ___", display: "No. of Trays = x", answers: ["x"] },
-        { blank: "No. of eggs per tray = ___", display: "No. of eggs per tray = 5", answers: ["5"] },
-        { blank: "Total no. of eggs = ___", display: "Total no. of eggs = 35", answers: ["35"] },
-        { blank: "Equation = ___", display: "Equation: x × 5 = 35", answers: ["x*5=35","5*x=35","35/5=x"] },
+        { blank: "No. of Trays = ___", display: "No. of Trays = 9", answers: ["9"] },
+        { blank: "No. of Eggs per tray = ___", display: "No. of Eggs per tray = 6", answers: ["6"] },
+        { blank: "Total no. of eggs = ___", display: "Total no. of eggs = x", answers: ["x"] },
+        { blank: "Equation = ___", display: "Equation: 9 × 6 = x", answers: ["9*6=x","6*9=x"] },
+        { blank: "Solution x = ___", display: "x = 54", answers: ["54"] }
+    ]
+},
+
+{
+    question: `
+        Har bag mein 4 oranges hain.
+        Total 36 oranges hain.
+        Kitne bags hain?
+    `,
+    steps: [
+        { blank: "No. of Bags = ___", display: "No. of Bags = x", answers: ["x"] },
+        { blank: "No. of Oranges per bag = ___", display: "No. of Oranges per bag = 4", answers: ["4"] },
+        { blank: "Total no. of oranges = ___", display: "Total no. of oranges = 36", answers: ["36"] },
+        { blank: "Equation = ___", display: "Equation: x × 4 = 36", answers: ["x*4=36","36/4=x"] },
+        { blank: "Solution x = ___", display: "x = 9", answers: ["9"] }
+    ]
+},
+
+{
+    question: `
+        7 racks mein books hain.
+        Har rack mein 5 books hain.
+        Total books kitni hain?
+    `,
+    steps: [
+        { blank: "No. of Racks = ___", display: "No. of Racks = 7", answers: ["7"] },
+        { blank: "No. of Books per rack = ___", display: "No. of Books per rack = 5", answers: ["5"] },
+        { blank: "Total no. of books = ___", display: "Total no. of books = x", answers: ["x"] },
+        { blank: "Equation = ___", display: "Equation: 7 × 5 = x", answers: ["7*5=x","5*7=x"] },
+        { blank: "Solution x = ___", display: "x = 35", answers: ["35"] }
+    ]
+},
+
+{
+    question: `
+        Har child ko 9 candies milti hain.
+        Total 72 candies hain.
+        Kitne children hain?
+    `,
+    steps: [
+        { blank: "No. of Children = ___", display: "No. of Children = x", answers: ["x"] },
+        { blank: "No. of Candies per child = ___", display: "No. of Candies per child = 9", answers: ["9"] },
+        { blank: "Total no. of candies = ___", display: "Total no. of candies = 72", answers: ["72"] },
+        { blank: "Equation = ___", display: "Equation: x × 9 = 72", answers: ["x*9=72","72/9=x"] },
+        { blank: "Solution x = ___", display: "x = 8", answers: ["8"] }
+    ]
+},
+
+{
+    question: `
+        3 jars mein candies hain.
+        Har jar mein 11 candies hain.
+        Total candies kitni hain?
+    `,
+    steps: [
+        { blank: "No. of Jars = ___", display: "No. of Jars = 3", answers: ["3"] },
+        { blank: "No. of Candies per jar = ___", display: "No. of Candies per jar = 11", answers: ["11"] },
+        { blank: "Total no. of candies = ___", display: "Total no. of candies = x", answers: ["x"] },
+        { blank: "Equation = ___", display: "Equation: 3 × 11 = x", answers: ["3*11=x","11*3=x"] },
+        { blank: "Solution x = ___", display: "x = 33", answers: ["33"] }
+    ]
+},
+
+{
+    question: `
+        Har plate mein 6 cakes hain.
+        Total 42 cakes hain.
+        Kitni plates hain?
+    `,
+    steps: [
+        { blank: "No. of Plates = ___", display: "No. of Plates = x", answers: ["x"] },
+        { blank: "No. of Cakes per plate = ___", display: "No. of Cakes per plate = 6", answers: ["6"] },
+        { blank: "Total no. of cakes = ___", display: "Total no. of cakes = 42", answers: ["42"] },
+        { blank: "Equation = ___", display: "Equation: x × 6 = 42", answers: ["x*6=42","42/6=x"] },
         { blank: "Solution x = ___", display: "x = 7", answers: ["7"] }
     ]
 },
 
 {
     question: `
-        9 racks mein books hain.
-        Total 81 books hain. Har rack mein kitni books hain?
+        8 boxes mein toys hain.
+        Har box mein 9 toys hain.
+        Total toys kitne hain?
     `,
     steps: [
-        { blank: "No. of Racks = ___", display: "No. of Racks = 9", answers: ["9"] },
-        { blank: "No. of books per rack = ___", display: "No. of books per rack = x", answers: ["x"] },
-        { blank: "Total no. of books = ___", display: "Total no. of books = 81", answers: ["81"] },
-        { blank: "Equation = ___", display: "Equation: 9 × x = 81", answers: ["9*x=81","x*9=81","81/9=x"] },
-        { blank: "Solution x = ___", display: "x = 9", answers: ["9"] }
-    ]
-},
-
-{
-    question: `
-        Har child ko 3 candies milti hain.
-        Total 24 candies hain. Kitne children hain?
-    `,
-    steps: [
-        { blank: "No. of Children = ___", display: "No. of Children = x", answers: ["x"] },
-        { blank: "No. of candies per child = ___", display: "No. of candies per child = 3", answers: ["3"] },
-        { blank: "Total no. of candies = ___", display: "Total no. of candies = 24", answers: ["24"] },
-        { blank: "Equation = ___", display: "Equation: x × 3 = 24", answers: ["x*3=24","3*x=24","24/3=x"] },
-        { blank: "Solution x = ___", display: "x = 8", answers: ["8"] }
-    ]
-},
-
-{
-    question: `
-        4 jars mein candies hain.
-        Total 20 candies hain. Har jar mein kitni candies hain?
-    `,
-    steps: [
-        { blank: "No. of Jars = ___", display: "No. of Jars = 4", answers: ["4"] },
-        { blank: "No. of candies per jar = ___", display: "No. of candies per jar = x", answers: ["x"] },
-        { blank: "Total no. of candies = ___", display: "Total no. of candies = 20", answers: ["20"] },
-        { blank: "Equation = ___", display: "Equation: 4 × x = 20", answers: ["4*x=20","x*4=20","20/4=x"] },
-        { blank: "Solution x = ___", display: "x = 5", answers: ["5"] }
-    ]
-},
-
-{
-    question: `
-        Har plate mein 2 cakes hain.
-        Total 16 cakes hain. Kitni plates hain?
-    `,
-    steps: [
-        { blank: "No. of Plates = ___", display: "No. of Plates = x", answers: ["x"] },
-        { blank: "No. of cakes per plate = ___", display: "No. of cakes per plate = 2", answers: ["2"] },
-        { blank: "Total no. of cakes = ___", display: "Total no. of cakes = 16", answers: ["16"] },
-        { blank: "Equation = ___", display: "Equation: x × 2 = 16", answers: ["x*2=16","2*x=16","16/2=x"] },
-        { blank: "Solution x = ___", display: "x = 8", answers: ["8"] }
-    ]
-},
-
-{
-    question: `
-        7 boxes mein toys hain.
-        Total 63 toys hain. Har box mein kitne toys hain?
-    `,
-    steps: [
-        { blank: "No. of Boxes = ___", display: "No. of Boxes = 7", answers: ["7"] },
-        { blank: "No. of toys per box = ___", display: "No. of toys per box = x", answers: ["x"] },
-        { blank: "Total no. of toys = ___", display: "Total no. of toys = 63", answers: ["63"] },
-        { blank: "Equation = ___", display: "Equation: 7 × x = 63", answers: ["7*x=63","x*7=63","63/7=x"] },
-        { blank: "Solution x = ___", display: "x = 9", answers: ["9"] }
+        { blank: "No. of Boxes = ___", display: "No. of Boxes = 8", answers: ["8"] },
+        { blank: "No. of Toys per box = ___", display: "No. of Toys per box = 9", answers: ["9"] },
+        { blank: "Total no. of toys = ___", display: "Total no. of toys = x", answers: ["x"] },
+        { blank: "Equation = ___", display: "Equation: 8 × 9 = x", answers: ["8*9=x","9*8=x"] },
+        { blank: "Solution x = ___", display: "x = 72", answers: ["72"] }
     ]
 }
+
 ];
